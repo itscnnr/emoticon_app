@@ -1190,6 +1190,14 @@ var currentOrderId  = null;
 var pollInterval    = null;
 
 function goToPayment() {
+  var rawName = (document.getElementById('pack-name-input').value || '').trim();
+  var invalid = rawName.replace(/@/g, '').match(/[^a-zA-Z0-9 _\-\.]/g);
+  if (invalid) {
+    var chars = invalid.filter(function(c, i, a) { return a.indexOf(c) === i; }).join('  ');
+    showToast('NO ' + chars + ' ALLOWED', 3000);
+    return;
+  }
+
   document.getElementById('pay-amount').textContent  = 'FETCHING…';
   document.getElementById('pay-address').textContent = '—';
   document.getElementById('pay-network').textContent = '—';
@@ -1379,12 +1387,12 @@ function copyPayAddress() {
    CLIPBOARD + TOAST
 ═══════════════════════════════════════════════════ */
 var toastTimer = null;
-function showToast(msg) {
+function showToast(msg, duration) {
   var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, duration || 1800);
 }
 
 function copyText(text) {
