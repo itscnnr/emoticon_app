@@ -1653,7 +1653,7 @@ function buildLottieData() {
       /* scale the image so its longest side fills ~70% of the 512px comp space */
       var fill    = 512 * 0.70;
       var maxDim  = Math.max(uploadedLogoW, uploadedLogoH);
-      var pct     = maxDim > 0 ? (fill / maxDim) * 100 : 50;
+      var pct     = maxDim > 0 ? (fill / maxDim) * 50 : 50;
       comp0.layers = [{
         ddd:0, ind:0, ty:2, nm:'User Logo', refId:'user_logo',
         ks:{
