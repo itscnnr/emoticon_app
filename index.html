@@ -629,7 +629,13 @@
 
         <!-- ACCENT picker -->
         <div class="hue-picker-wrap">
-          <div class="pill">ACCENT COLOUR</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+            <div class="pill">ACCENT COLOUR</div>
+            <div style="display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;" onclick="toggleHue()">
+              <span class="toggle-lbl" style="opacity:0.55;">CHANGE ACCENT COLOUR</span>
+              <div class="toggle-sw" id="toggle-sw"><div class="toggle-knob"></div></div>
+            </div>
+          </div>
           <div class="hue-picker-box" id="accent-picker-box">
             <div class="hex-swatch" id="accent-hex-swatch" onclick="document.getElementById('accent-color-native').click()"></div>
             <input type="color" id="accent-color-native" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none;" value="#38bdf8">
@@ -646,12 +652,6 @@
           </div>
         </div>
 
-        <div class="toggle-row" onclick="toggleHue()">
-          <div class="toggle-sw" id="toggle-sw">
-            <div class="toggle-knob"></div>
-          </div>
-          <span class="toggle-lbl">DO NOT CHANGE LOGO COLOUR</span>
-        </div>
       </div>
 
       <div class="nav">
@@ -1042,7 +1042,7 @@ function goTo(n) {
 /* ═══════════════════════════════════════════════════
    TOGGLE SWITCH
 ═══════════════════════════════════════════════════ */
-var hueToggleOn = true; /* ON = don't change logo colour (default) */
+var hueToggleOn = false; /* OFF = don't change accent colour (default) */
 function toggleHue() {
   hueToggleOn = !hueToggleOn;
   document.getElementById('toggle-sw').classList.toggle('on', hueToggleOn);
@@ -1052,7 +1052,7 @@ function toggleHue() {
 /* ── tinted logo (used when "DO NOT CHANGE LOGO COLOUR" is OFF) ── */
 var tintedLogoDataUrl = null;
 function updateTintedLogo() {
-  if (!uploadedLogoDataUrl || hueToggleOn) { tintedLogoDataUrl = null; scheduleReload(); return; }
+  if (!uploadedLogoDataUrl || !hueToggleOn) { tintedLogoDataUrl = null; scheduleReload(); return; }
   var img = new Image();
   img.onload = function() {
     var cvs = document.createElement('canvas');
@@ -1301,7 +1301,7 @@ function triggerGeneration() {
   formData.append('main_color',             getMainHex());
   formData.append('accent_color',           getAccentHex());
   formData.append('logo_scale_pct',         logoScalePct);
-  formData.append('keep_logo_color',        hueToggleOn ? 'true' : 'false');
+  formData.append('keep_logo_color',        !hueToggleOn ? 'true' : 'false');
   formData.append('selected_logo_emojis',   JSON.stringify(getSelectedLogoIndices()));
   formData.append('selected_symbol_emojis', JSON.stringify(getSelectedSymbolIndices()));
   formData.append('pack_name',              getPackName());
@@ -1709,7 +1709,7 @@ function buildLottieData() {
   /* replace logo if user uploaded one */
   if (uploadedLogoDataUrl) {
     /* add / update image asset */
-    var logoUrl  = (!hueToggleOn && tintedLogoDataUrl) ? tintedLogoDataUrl : uploadedLogoDataUrl;
+    var logoUrl  = (hueToggleOn && tintedLogoDataUrl) ? tintedLogoDataUrl : uploadedLogoDataUrl;
     var imgAsset = { id:'user_logo', w:uploadedLogoW, h:uploadedLogoH, u:'', p:logoUrl, e:1 };
     var existing = data.assets.findIndex(function(a){ return a.id === 'user_logo'; });
     if (existing >= 0) data.assets[existing] = imgAsset;
