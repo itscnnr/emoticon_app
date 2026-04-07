@@ -954,7 +954,7 @@
         <div class="stat-section">
           <p class="stat-lbl">LINK</p>
           <div class="stat-pill copyable" id="pack-download-pill" onclick="downloadPack()" title="Click to download">
-            <svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><path d="M4.5 1v5M2.5 4.5l2 2 2-2M1.5 7.5h6" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg id="pack-status-dot" class="stat-dot pulse-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#F59E0B"/></svg>
             <span class="stat-txt" id="pack-download-txt">PREPARING DOWNLOAD…</span>
           </div>
         </div>
@@ -1293,6 +1293,8 @@ function triggerGeneration() {
   pendingDownloadUrl  = null;
   pendingPackUrl      = null;
   document.getElementById('pack-download-txt').textContent = 'CREATING PACK…';
+  var dot = document.getElementById('pack-status-dot');
+  if (dot) { dot.querySelector('circle').setAttribute('fill', '#F59E0B'); dot.classList.add('pulse-dot'); }
 
   var formData = new FormData();
 
@@ -1328,6 +1330,8 @@ function triggerGeneration() {
               if (s.status === 'done') {
                 pendingPackUrl = s.pack_url;
                 document.getElementById('pack-download-txt').textContent = 'OPEN EMOJI PACK (' + s.added + '/' + s.total + ')';
+                var dotEl = document.getElementById('pack-status-dot');
+                if (dotEl) dotEl.outerHTML = '<svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><path d="M4.5 1v5M2.5 4.5l2 2 2-2M1.5 7.5h6" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
                 goTo(5);
               } else if (s.status === 'error') {
                 document.getElementById('pack-download-txt').textContent = 'ERROR — ' + s.error;
@@ -1356,6 +1360,8 @@ function triggerGeneration() {
       .then(function(blob) {
         pendingDownloadUrl = URL.createObjectURL(blob);
         document.getElementById('pack-download-txt').textContent = 'CLICK TO DOWNLOAD';
+                var dotEl = document.getElementById('pack-status-dot');
+                if (dotEl) dotEl.outerHTML = '<svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><path d="M4.5 1v5M2.5 4.5l2 2 2-2M1.5 7.5h6" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         goTo(5);
       })
       .catch(function() {
