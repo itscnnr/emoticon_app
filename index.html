@@ -543,17 +543,19 @@
 
     /* ── Compact layout for small screens (Telegram mini-app) ── */
     @media (max-height: 700px) {
-      .hue-card { gap: 10px; }
-      .hue-picker-wrap { gap: 6px; }
-      .hue-picker-box  { padding: 8px 16px; }
-      .scale-wrap { gap: 6px; }
-      .scale-box  { padding: 8px 16px; }
-      .hue-circle { width: 38px; height: 38px; }
-      .hex-swatch { width: 22px; height: 22px; border-radius: 6px; }
-      .hex-input  { font-size: 11px; }
-      .hue-text   { gap: 4px; }
-      .screen-title { font-size: 16px; }
-      .screen-sub   { font-size: 9px; }
+      .hue-card         { gap: 10px; }
+      .hue-picker-wrap  { gap: 6px; }
+      .scale-wrap       { gap: 6px; }
+      .hue-circle       { width: 36px; height: 36px; }
+      .hue-text         { gap: 4px; }
+      .screen-title     { font-size: 16px; }
+      .screen-sub       { font-size: 9px; }
+      /* shrink box contents, keep padding — box compresses from content inward */
+      .hex-swatch       { width: 18px; height: 18px; border-radius: 5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.35); }
+      .hex-input        { font-size: 10px; }
+      .scale-range::-webkit-slider-thumb { width: 11px; height: 11px; }
+      .scale-range::-moz-range-thumb     { width: 11px; height: 11px; }
+      .scale-label      { font-size: 10px; }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5/build/player/lottie.min.js"></script>
