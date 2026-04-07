@@ -158,8 +158,7 @@
     }
     .btn:hover { background: rgba(255,255,255,0.12); }
     .btn.off { opacity: 0.33; pointer-events: none; }
-    .btn img { height: 9.537px; width: 10.644px; display: block; flex-shrink: 0; }
-    .btn .arr-r { transform: scaleX(-1); }
+    .btn img, .btn svg { height: 10px; width: 11px; display: block; flex-shrink: 0; }
 
     /* ── big title (inside cards) ── */
     .big-title {
@@ -515,7 +514,7 @@
     /* ════ PULSE ════ */
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50%       { transform: scale(1.55); opacity: 0.65; }
+      50%       { transform: scale(1.25); opacity: 0.7; }
     }
     .pulse-dot { animation: pulse 1.8s ease-in-out infinite; }
 
@@ -587,12 +586,12 @@
       </div>
       <div class="nav">
         <button class="btn" onclick="window.close()">
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           EXIT
         </button>
         <button class="btn off" id="s0-next">
           NEXT
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
@@ -657,12 +656,12 @@
 
       <div class="nav">
         <button class="btn" onclick="goTo(0)">
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           BACK
         </button>
         <button class="btn" onclick="goTo(2)">
           NEXT
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
@@ -834,12 +833,12 @@
 
       <div class="nav">
         <button class="btn" onclick="goTo(1)">
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           BACK
         </button>
         <button class="btn off" id="s2-payment" onclick="goToPayment()">
           PAYMENT
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
       <!-- DEV ONLY — remove before launch -->
@@ -871,33 +870,33 @@
         <div class="stat-section">
           <p class="stat-lbl">NETWORK</p>
           <div class="stat-pill">
-            <svg class="stat-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="rgba(255,255,255,0.2)"/></svg>
+            <svg id="pay-network-dot" class="stat-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="rgba(255,255,255,0.2)"/></svg>
             <span class="stat-txt" id="pay-network">—</span>
           </div>
         </div>
         <div class="stat-section">
           <p class="stat-lbl">AMOUNT (CLICK TO COPY)</p>
           <div class="stat-pill copyable" id="pay-amount-pill" onclick="copyPayAmount()" title="Click to copy">
-            <svg class="stat-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="rgba(255,255,255,0.2)"/></svg>
+            <svg class="link-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" style="flex-shrink:0;display:block;"><rect x="0.75" y="2.75" width="6" height="6.5" rx="1.25" stroke="#ececec" stroke-width="1.25"/><path d="M3 2.75V2A1.25 1.25 0 014.25.75h3.5A1.25 1.25 0 019 2v5.25A1.25 1.25 0 017.75 8.5H7.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="stat-txt" id="pay-amount">FETCHING…</span>
           </div>
         </div>
         <div class="stat-section">
           <p class="stat-lbl">SEND TO (CLICK TO COPY)</p>
           <div class="stat-pill copyable" id="pay-addr-pill" onclick="copyPayAddress()" title="Click to copy">
-            <svg class="stat-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="rgba(255,255,255,0.2)"/></svg>
+            <svg class="link-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" style="flex-shrink:0;display:block;"><rect x="0.75" y="2.75" width="6" height="6.5" rx="1.25" stroke="#ececec" stroke-width="1.25"/><path d="M3 2.75V2A1.25 1.25 0 014.25.75h3.5A1.25 1.25 0 019 2v5.25A1.25 1.25 0 017.75 8.5H7.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="stat-txt" id="pay-address">—</span>
           </div>
         </div>
       </div>
       <div class="nav">
         <button class="btn" onclick="goTo(2)">
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           BACK
         </button>
         <button class="btn" onclick="goTo(4)">
           EXIT
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
@@ -927,12 +926,12 @@
       </div>
       <div class="nav">
         <button class="btn" onclick="goTo(3)">
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           BACK
         </button>
         <button class="btn off">
           EXIT
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
@@ -955,26 +954,26 @@
         <div class="stat-section">
           <p class="stat-lbl">LINK</p>
           <div class="stat-pill copyable" id="pack-download-pill" onclick="downloadPack()" title="Click to download">
-            <svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><path d="M4.5 1v5M2.5 4.5l2 2 2-2M1.5 7.5h6" stroke="#ececec" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><path d="M4.5 1v5M2.5 4.5l2 2 2-2M1.5 7.5h6" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="stat-txt" id="pack-download-txt">PREPARING DOWNLOAD…</span>
           </div>
         </div>
         <div class="stat-section">
           <p class="stat-lbl multi">ISSUE WITH YOUR PACK?<br>CONTACT SUPPORT</p>
           <div class="stat-pill copyable" onclick="copyText('t.me/oguconnor')" title="Click to copy">
-            <svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><rect x="0.5" y="2.5" width="5.5" height="6" rx="1" stroke="#ececec" stroke-width="0.9"/><path d="M2.5 2.5V1.5C2.5 1 2.9 0.5 3.5 0.5h4C8 0.5 8.5 1 8.5 1.5v5C8.5 7 8 7.5 7.5 7.5H7" stroke="#ececec" stroke-width="0.9" stroke-linecap="round"/></svg>
+            <svg class="link-icon" width="9" height="9" viewBox="0 0 9 9" fill="none" style="flex-shrink:0;"><rect x="0.5" y="2.5" width="5.5" height="6" rx="1" stroke="#ececec" stroke-width="1.25"/><path d="M2.5 2.5V1.5C2.5 1 2.9 0.5 3.5 0.5h4C8 0.5 8.5 1 8.5 1.5v5C8.5 7 8 7.5 7.5 7.5H7" stroke="#ececec" stroke-width="1.25" stroke-linecap="round"/></svg>
             <span class="stat-txt">t.me/oguconnor</span>
           </div>
         </div>
       </div>
       <div class="nav">
         <button class="btn" onclick="goTo(4)">
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           BACK
         </button>
         <button class="btn" onclick="goTo(0)">
           EXIT
-          <svg width="11" height="10" viewBox="0 0 11 10" fill="none" style="flex-shrink:0;display:block;"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
@@ -1136,6 +1135,7 @@ function updateTotal() {
    CRYPTO PILLS
 ═══════════════════════════════════════════════════ */
 var cryptoBg     = { BTC:'rgba(247,147,26,0.18)',  ETH:'rgba(98,126,234,0.18)',  LTC:'rgba(52,93,157,0.18)',   SOL:'rgba(153,69,255,0.18)', TON:'rgba(0,136,204,0.18)',  XMR:'rgba(255,102,0,0.18)',  TRX:'rgba(234,42,29,0.18)',  XRP:'rgba(0,170,228,0.18)',  USDT:'rgba(38,161,123,0.18)',  USDC:'rgba(39,117,202,0.18)'  };
+var cryptoColor  = { BTC:'#F7931A', ETH:'#627EEA', LTC:'#345D9D', SOL:'#9945FF', TON:'#0098EA', TRX:'#EA2A1D', XRP:'#00AAE4', USDT:'#26A17B', USDC:'#2775CA' };
 var cryptoBorder = { BTC:'rgba(247,147,26,0.55)',  ETH:'rgba(98,126,234,0.55)',  LTC:'rgba(52,93,157,0.55)',   SOL:'rgba(153,69,255,0.55)', TON:'rgba(0,136,204,0.55)',  XMR:'rgba(255,102,0,0.55)',  TRX:'rgba(234,42,29,0.55)',  XRP:'rgba(0,170,228,0.55)',  USDT:'rgba(38,161,123,0.55)',  USDC:'rgba(39,117,202,0.55)'  };
 
 var cryptoAddresses = {
@@ -1168,6 +1168,8 @@ function selectCrypto(el) {
   });
   var key = el.dataset.crypto;
   selectedCrypto = key;
+  var nd = document.getElementById('pay-network-dot');
+  if (nd) nd.querySelector('circle').setAttribute('fill', cryptoColor[key] || 'rgba(255,255,255,0.2)');
   el.style.background  = cryptoBg[key]     || 'rgba(255,255,255,0.12)';
   el.style.borderColor = cryptoBorder[key] || 'rgba(255,255,255,0.4)';
   checkSelReady();
@@ -1220,6 +1222,8 @@ function goToPayment() {
       document.getElementById('pay-amount').textContent  = data.amount_display;
       document.getElementById('pay-address').textContent = data.address;
       document.getElementById('pay-network').textContent = cryptoNetworks[data.crypto] || data.crypto;
+      var nd2 = document.getElementById('pay-network-dot');
+      if (nd2) nd2.querySelector('circle').setAttribute('fill', cryptoColor[data.crypto] || 'rgba(255,255,255,0.2)');
       startPolling();
     })
     .catch(function() {
