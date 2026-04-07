@@ -341,60 +341,6 @@
       transition: background 0.2s;
     }
     .toggle-sw.on .toggle-knob { background: #ececec; }
-    /* ── scale slider ── */
-    .scale-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-      width: 100%;
-      flex-shrink: 0;
-    }
-    .scale-box {
-      background: rgba(255,255,255,0.03);
-      border: 0.5px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-    }
-    .scale-range {
-      flex: 1;
-      -webkit-appearance: none;
-      appearance: none;
-      height: 4px;
-      border-radius: 999px;
-      background: linear-gradient(to right, rgba(255,255,255,0.55) var(--pct,44%), rgba(255,255,255,0.1) var(--pct,44%));
-      outline: none;
-      cursor: pointer;
-    }
-    .scale-range::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: #ececec;
-      border: 0.5px solid rgba(255,255,255,0.4);
-      cursor: grab;
-    }
-    .scale-range::-moz-range-thumb {
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: #ececec;
-      border: 0.5px solid rgba(255,255,255,0.4);
-      cursor: grab;
-    }
-    .scale-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.5);
-      font-variation-settings: 'wdth' 100;
-      letter-spacing: 0.05em;
-      flex-shrink: 0;
-      min-width: 38px;
-      text-align: right;
-    }
 
     .toggle-lbl {
       font-size: 8px;
@@ -550,12 +496,8 @@
       /* Keep all gaps/spacing identical to full screen.
          Compress only the box content + padding so boxes get shorter. */
       .hue-picker-box { padding: 6px 16px; }
-      .scale-box      { padding: 6px 16px; }
       .hex-swatch     { width: 16px; height: 16px; border-radius: 4px; box-shadow: 0 0 0 1px rgba(255,255,255,0.35); }
       .hex-input      { font-size: 10px; }
-      .scale-range::-webkit-slider-thumb { width: 11px; height: 11px; }
-      .scale-range::-moz-range-thumb     { width: 11px; height: 11px; }
-      .scale-label    { font-size: 10px; }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5/build/player/lottie.min.js"></script>
@@ -657,15 +599,6 @@
             <div class="hex-swatch" id="accent-hex-swatch" onclick="document.getElementById('accent-color-native').click()"></div>
             <input type="color" id="accent-color-native" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none;" value="#38bdf8">
             <input class="hex-input" id="accent-hex-value" type="text" value="#38BDF8" maxlength="7" spellcheck="false" placeholder="#000000">
-          </div>
-        </div>
-
-        <!-- LOGO SCALE -->
-        <div class="scale-wrap">
-          <div class="pill">LOGO SCALE</div>
-          <div class="scale-box">
-            <input class="scale-range" id="scale-range" type="range" min="20" max="200" value="50">
-            <span class="scale-label" id="logo-scale-value">50%</span>
           </div>
         </div>
 
@@ -1317,7 +1250,6 @@ function triggerGeneration() {
 
   formData.append('main_color',             getMainHex());
   formData.append('accent_color',           getAccentHex());
-  formData.append('logo_scale_pct',         logoScalePct);
   formData.append('keep_logo_color',        !hueToggleOn ? 'true' : 'false');
   formData.append('selected_logo_emojis',   JSON.stringify(getSelectedLogoIndices()));
   formData.append('selected_symbol_emojis', JSON.stringify(getSelectedSymbolIndices()));
@@ -1439,22 +1371,6 @@ var VALID_TYPES = ['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp'];
 var VALID_EXTS  = ['svg', 'png', 'jpg', 'jpeg', 'webp'];
 
 var uploadCard    = document.getElementById('upload-card');
-/* ── logo scale range slider ── */
-(function() {
-  var range = document.getElementById('scale-range');
-  var label = document.getElementById('logo-scale-value');
-
-  function update() {
-    logoScalePct = parseInt(range.value, 10);
-    label.textContent = logoScalePct + '%';
-    var pct = ((logoScalePct - 20) / 180 * 100).toFixed(1) + '%';
-    range.style.setProperty('--pct', pct);
-    scheduleReload();
-  }
-
-  range.addEventListener('input', update);
-  update(); // seed initial state
-})();
 
 var fileInput     = document.getElementById('file-input');
 var uploadEmpty   = document.getElementById('upload-empty');
@@ -1684,7 +1600,6 @@ var uploadedSvgText     = null;   // raw SVG text (only for SVG uploads)
 var uploadedLogoW      = 0;
 var uploadedLogoH      = 0;
 var reloadPending      = false;
-var logoScalePct       = 50;
 
 /* ── schedule debounced reload (keeps dragging smooth) ── */
 function scheduleReload() {
@@ -1738,7 +1653,7 @@ function buildLottieData() {
       /* scale the image so its longest side fills ~70% of the 512px comp space */
       var fill    = 512 * 0.70;
       var maxDim  = Math.max(uploadedLogoW, uploadedLogoH);
-      var pct     = maxDim > 0 ? (fill / maxDim) * 100 * (logoScalePct / 100) : logoScalePct;
+      var pct     = maxDim > 0 ? (fill / maxDim) * 100 : 50;
       comp0.layers = [{
         ddd:0, ind:0, ty:2, nm:'User Logo', refId:'user_logo',
         ks:{
