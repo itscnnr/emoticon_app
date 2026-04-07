@@ -12,7 +12,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #000;
+      background: #1a1a1a;
       height: 100vh;
       overflow: hidden;
       display: flex;
@@ -24,7 +24,7 @@
       width: 390px;
       height: 100vh;
       overflow: hidden;
-      background: #000;
+      background: #1a1a1a;
       position: relative;
     }
 
@@ -35,7 +35,7 @@
       padding: 32px;
       height: 100vh;
       overflow: hidden;
-      background: #000;
+      background: #1a1a1a;
     }
     .screen.active { display: flex; }
 
@@ -87,7 +87,7 @@
       transition: background 0.2s, transform 0.2s;
     }
     .progress-dot.active {
-      background: #ffffff;
+      background: #ececec;
       width: 7px;
       height: 7px;
     }
@@ -95,7 +95,7 @@
     .screen-title {
       font-size: 20px;
       font-weight: 700;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       white-space: nowrap;
       font-variation-settings: 'wdth' 100;
@@ -104,7 +104,7 @@
     .screen-sub {
       font-size: 10px;
       font-weight: 400;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       line-height: 1.1;
       font-variation-settings: 'wdth' 100;
@@ -130,7 +130,7 @@
       border-radius: 999px;
       padding: 5px 10px;
       font-size: 8px;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       white-space: nowrap;
       font-variation-settings: 'wdth' 100;
@@ -142,7 +142,7 @@
     .nav { display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; flex-shrink: 0; }
     .btn {
       background: rgba(255,255,255,0.05);
-      border: 0.5px solid #fff;
+      border: 0.5px solid rgba(255,255,255,0.25);
       border-radius: 999px;
       padding: 5px 10px;
       display: flex;
@@ -151,7 +151,7 @@
       cursor: pointer;
       font-family: 'Instrument Sans', sans-serif;
       font-size: 8px;
-      color: #fff;
+      color: #ececec;
       font-variation-settings: 'wdth' 100;
       white-space: nowrap;
       line-height: 1.1;
@@ -165,7 +165,7 @@
     .big-title {
       font-size: 20px;
       font-weight: 700;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       white-space: nowrap;
       font-variation-settings: 'wdth' 100;
@@ -248,7 +248,7 @@
       transition: background 0.15s, color 0.15s;
       flex-shrink: 0;
     }
-    .change-pill:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .change-pill:hover { background: rgba(255,255,255,0.1); color: #ececec; }
 
     /* ════ HUE ════ */
     .hue-card { gap: 20px; justify-content: center; }
@@ -294,7 +294,7 @@
     .hex-input {
       font-size: 13px;
       font-weight: 600;
-      color: #fff;
+      color: #ececec;
       background: none;
       border: none;
       outline: none;
@@ -307,7 +307,7 @@
       padding: 0;
     }
     .hex-input::placeholder { color: rgba(255,255,255,0.2); }
-    .hex-input:focus { color: #fff; }
+    .hex-input:focus { color: #ececec; }
 
     .toggle-row {
       background: rgba(255,255,255,0.05);
@@ -341,7 +341,7 @@
       flex-shrink: 0;
       transition: background 0.2s;
     }
-    .toggle-sw.on .toggle-knob { background: #fff; }
+    .toggle-sw.on .toggle-knob { background: #ececec; }
     /* ── scale slider ── */
     .scale-wrap {
       display: flex;
@@ -375,14 +375,14 @@
       -webkit-appearance: none;
       width: 14px; height: 14px;
       border-radius: 50%;
-      background: #fff;
+      background: #ececec;
       border: 0.5px solid rgba(255,255,255,0.4);
       cursor: grab;
     }
     .scale-range::-moz-range-thumb {
       width: 14px; height: 14px;
       border-radius: 50%;
-      background: #fff;
+      background: #ececec;
       border: 0.5px solid rgba(255,255,255,0.4);
       cursor: grab;
     }
@@ -399,7 +399,7 @@
 
     .toggle-lbl {
       font-size: 8px;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       white-space: nowrap;
       font-variation-settings: 'wdth' 100;
@@ -416,7 +416,7 @@
       border-radius: 20px;
       padding: 10px 16px;
       width: 100%;
-      color: #fff;
+      color: #ececec;
       font-family: 'Instrument Sans', sans-serif;
       font-size: 10px;
       font-variation-settings: 'wdth' 100;
@@ -433,7 +433,7 @@
     .cat-title {
       font-size: 14px;
       font-weight: 700;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       white-space: nowrap;
       font-variation-settings: 'wdth' 100;
@@ -452,7 +452,7 @@
     }
     .emoji svg { transform: scale(0.8); transform-origin: center; }
     .emoji:hover { background: rgba(255,255,255,0.08); transform: scale(1.05); }
-    .emoji.sel { background: rgba(255,255,255,0.1); outline: 2px solid #38BDF8; outline-offset: 2px; }
+    .emoji.sel { background: rgba(91,138,245,0.1); outline: 2px solid #5b8af5; outline-offset: 2px; }
     .emoji.sel:hover { transform: scale(1.05); }
 
     .summary-card {
@@ -467,8 +467,8 @@
       flex-shrink: 0;
     }
     .sum-left { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex-shrink: 0; }
-    .sum-lbl { font-size: 10px; font-weight: 700; color: #fff; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
-    .sum-desc { font-size: 10px; color: #fff; line-height: 1.1; font-variation-settings: 'wdth' 100; }
+    .sum-lbl { font-size: 10px; font-weight: 700; color: #ececec; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
+    .sum-desc { font-size: 10px; color: #ececec; line-height: 1.1; font-variation-settings: 'wdth' 100; }
     .sum-fine { font-size: 6px; color: rgba(255,255,255,0.2); font-style: italic; font-weight: 500; line-height: 1.1; font-variation-settings: 'wdth' 100; }
     .sum-right { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; flex: 1; min-width: 0; }
     .crypto-tags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; width: 100%; }
@@ -479,7 +479,7 @@
       border-radius: 999px;
       padding: 5px 10px;
       font-size: 8px;
-      color: #fff;
+      color: #ececec;
       text-align: center;
       white-space: nowrap;
       font-variation-settings: 'wdth' 100;
@@ -493,10 +493,10 @@
 
     /* ════ PAYMENT ════ */
     .pay-card { gap: 12px; justify-content: center; }
-    .pay-title { font-size: 20px; font-weight: 700; color: #fff; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
-    .pay-sub { font-size: 10px; color: #fff; text-align: center; line-height: 1.1; font-variation-settings: 'wdth' 100; }
+    .pay-title { font-size: 20px; font-weight: 700; color: #ececec; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
+    .pay-sub { font-size: 10px; color: #ececec; text-align: center; line-height: 1.1; font-variation-settings: 'wdth' 100; }
     .stat-section { display: flex; flex-direction: column; gap: 10px; align-items: center; flex-shrink: 0; }
-    .stat-lbl { font-size: 10px; font-weight: 700; color: #fff; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
+    .stat-lbl { font-size: 10px; font-weight: 700; color: #ececec; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
     .stat-lbl.multi { white-space: normal; line-height: 1.1; }
     .stat-pill {
       background: rgba(255,255,255,0.05);
@@ -510,7 +510,7 @@
     .stat-pill.copyable:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
     .stat-dot { width: 8px; height: 8px; flex-shrink: 0; display: block; }
     .link-icon { width: 8.8px; height: 8.8px; flex-shrink: 0; display: block; }
-    .stat-txt { font-size: 8px; color: #fff; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: 1.1; }
+    .stat-txt { font-size: 8px; color: #ececec; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: 1.1; }
 
     /* ════ PULSE ════ */
     @keyframes pulse {
@@ -525,9 +525,9 @@
       bottom: 36px;
       left: 50%;
       transform: translateX(-50%) translateY(12px);
-      background: rgba(20,20,20,0.96);
+      background: rgba(34,34,34,0.97);
       border: 0.5px solid rgba(255,255,255,0.15);
-      color: #fff;
+      color: #ececec;
       padding: 8px 18px;
       border-radius: 999px;
       font-size: 9px;
