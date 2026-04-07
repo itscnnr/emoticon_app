@@ -1193,8 +1193,8 @@ function goToPayment() {
   var rawName = (document.getElementById('pack-name-input').value || '').trim();
   var invalid = rawName.replace(/@/g, '').match(/[^a-zA-Z0-9 _\-\.]/g);
   if (invalid) {
-    var chars = invalid.filter(function(c, i, a) { return a.indexOf(c) === i; }).join('  ');
-    showToast('NO ' + chars + ' ALLOWED', 3000);
+    var chars = invalid.filter(function(c, i, a) { return a.indexOf(c) === i; }).join(' ');
+    showToast('NO "' + chars + '" ALLOWED', 3000);
     return;
   }
 
