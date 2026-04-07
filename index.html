@@ -486,6 +486,7 @@
       letter-spacing: 0.05em;
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #pack-name-input::placeholder { text-transform: uppercase; }
 
 
   </style>
@@ -619,7 +620,7 @@
       </div>
 
       <div class="card sel-card">
-        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:700;font-variation-settings:'wdth' 100;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;text-transform:uppercase;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
+        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:700;font-variation-settings:'wdth' 100;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
         <div style="display:flex;align-items:center;width:100%;">
           <div class="pill" id="emoji-count-pill">0 / 28 SELECTED</div>
         </div>
