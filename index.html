@@ -449,7 +449,7 @@
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s, transform 0.1s;
     }
-    .emoji svg { transform: scale(0.8); transform-origin: center; }
+    .emoji svg { transform: scale(0.64); transform-origin: center; }
     .emoji:hover { background: rgba(255,255,255,0.08); transform: scale(1.05); }
     .emoji.sel { background: rgba(91,138,245,0.1); outline: 2px solid #5b8af5; outline-offset: 2px; }
     .emoji.sel:hover { transform: scale(1.05); }
@@ -680,7 +680,7 @@
       </div>
 
       <div class="card sel-card">
-        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="Input pack name" style="width:100%;background:none;border:none;outline:none;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:700;font-variation-settings:'wdth' 100;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;text-transform:none;opacity:0.35;" onfocus="this.style.opacity='1'" onblur="this.style.opacity=this.value?'1':'0.35'">
+        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:700;font-variation-settings:'wdth' 100;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;text-transform:uppercase;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
         <div style="display:flex;align-items:center;width:100%;">
           <div class="pill" id="emoji-count-pill">0 / 28 SELECTED</div>
         </div>
