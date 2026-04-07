@@ -540,6 +540,21 @@
       letter-spacing: 0.05em;
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── Compact layout for small screens (Telegram mini-app) ── */
+    @media (max-height: 700px) {
+      .hue-card { gap: 10px; }
+      .hue-picker-wrap { gap: 6px; }
+      .hue-picker-box  { padding: 8px 16px; }
+      .scale-wrap { gap: 6px; }
+      .scale-box  { padding: 8px 16px; }
+      .hue-circle { width: 38px; height: 38px; }
+      .hex-swatch { width: 22px; height: 22px; border-radius: 6px; }
+      .hex-input  { font-size: 11px; }
+      .hue-text   { gap: 4px; }
+      .screen-title { font-size: 16px; }
+      .screen-sub   { font-size: 9px; }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5/build/player/lottie.min.js"></script>
 </head>
