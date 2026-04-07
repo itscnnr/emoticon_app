@@ -1694,9 +1694,9 @@ function buildLottieData() {
   if (comp2) {
     comp2.layers.forEach(function(layer) {
       if (layer.ty === 4) {          /* shape layers only */
-        replaceColorsInObj(layer, GREEN,      accentC);
-        replaceColorsInObj(layer, DARK_GREEN, mainC);
         replaceColorsInObj(layer, BLACK,      mainC);
+        replaceColorsInObj(layer, DARK_GREEN, mainC);
+        replaceColorsInObj(layer, GREEN,      accentC);
       }
     });
   }
