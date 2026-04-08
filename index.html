@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emoticon</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap" rel="stylesheet">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
+    @font-face {
+      font-family: 'Overused Grotesk';
+      src: url('fonts/OverusedGrotesk-VF.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -17,7 +21,7 @@
       overflow: hidden;
       display: flex;
       justify-content: center;
-      font-family: 'Instrument Sans', sans-serif;
+      font-family: 'Overused Grotesk', sans-serif;
     }
 
     #app {
@@ -94,12 +98,11 @@
 
     .screen-title {
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 900;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
-      font-variation-settings: 'wdth' 100;
-      line-height: normal;
+            line-height: normal;
     }
     .screen-sub {
       font-size: 10px;
@@ -107,8 +110,7 @@
       color: #ececec;
       text-align: center;
       line-height: 1.1;
-      font-variation-settings: 'wdth' 100;
-    }
+          }
 
     /* ── card ── */
     .card {
@@ -130,11 +132,11 @@
       border-radius: 999px;
       padding: 5px 10px;
       font-size: 8px;
+      font-weight: 900;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
-      font-variation-settings: 'wdth' 100;
-      line-height: 1.1;
+            line-height: 1.1;
       flex-shrink: 0;
     }
 
@@ -149,11 +151,10 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      font-family: 'Instrument Sans', sans-serif;
+      font-family: 'Overused Grotesk', sans-serif;
       font-size: 8px;
       color: #ececec;
-      font-variation-settings: 'wdth' 100;
-      white-space: nowrap;
+            white-space: nowrap;
       line-height: 1.1;
     }
     .btn:hover { background: rgba(255,255,255,0.12); }
@@ -163,12 +164,11 @@
     /* ── big title (inside cards) ── */
     .big-title {
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 900;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
-      font-variation-settings: 'wdth' 100;
-      line-height: normal;
+            line-height: normal;
     }
 
     /* ════ UPLOAD ════ */
@@ -221,8 +221,7 @@
     .upload-filename {
       font-size: 9px;
       color: rgba(255,255,255,0.5);
-      font-variation-settings: 'wdth' 100;
-      text-align: center;
+            text-align: center;
       max-width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -231,8 +230,7 @@
     .upload-converted {
       font-size: 7px;
       color: rgba(255,255,255,0.28);
-      font-variation-settings: 'wdth' 100;
-      text-align: center;
+            text-align: center;
       letter-spacing: 0.05em;
     }
     .change-pill {
@@ -242,8 +240,7 @@
       padding: 5px 12px;
       font-size: 8px;
       color: rgba(255,255,255,0.6);
-      font-variation-settings: 'wdth' 100;
-      cursor: pointer;
+            cursor: pointer;
       transition: background 0.15s, color 0.15s;
       flex-shrink: 0;
     }
@@ -292,14 +289,13 @@
     }
     .hex-input {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 400;
       color: #ececec;
       background: none;
       border: none;
       outline: none;
-      font-family: 'Instrument Sans', sans-serif;
-      font-variation-settings: 'wdth' 100;
-      letter-spacing: 0.06em;
+      font-family: 'Overused Grotesk', sans-serif;
+            letter-spacing: 0.06em;
       text-transform: uppercase;
       flex: 1;
       cursor: text;
@@ -347,8 +343,7 @@
       color: #ececec;
       text-align: center;
       white-space: nowrap;
-      font-variation-settings: 'wdth' 100;
-      line-height: 1.1;
+            line-height: 1.1;
     }
 
     /* ════ SELECTION ════ */
@@ -362,10 +357,9 @@
       padding: 10px 16px;
       width: 100%;
       color: #ececec;
-      font-family: 'Instrument Sans', sans-serif;
+      font-family: 'Overused Grotesk', sans-serif;
       font-size: 10px;
-      font-variation-settings: 'wdth' 100;
-      outline: none;
+            outline: none;
       flex-shrink: 0;
       transition: border-color 0.2s;
     }
@@ -377,12 +371,11 @@
     .category { display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; }
     .cat-title {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 900;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
-      font-variation-settings: 'wdth' 100;
-      line-height: normal;
+            line-height: normal;
     }
     .emoji-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; width: 100%; }
     .emoji {
@@ -412,9 +405,9 @@
       flex-shrink: 0;
     }
     .sum-left { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex-shrink: 0; }
-    .sum-lbl { font-size: 10px; font-weight: 700; color: #ececec; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
-    .sum-desc { font-size: 10px; color: #ececec; line-height: 1.1; font-variation-settings: 'wdth' 100; }
-    .sum-fine { font-size: 6px; color: rgba(255,255,255,0.2); font-style: italic; font-weight: 500; line-height: 1.1; font-variation-settings: 'wdth' 100; }
+    .sum-lbl { font-size: 10px; font-weight: 900; color: #ececec; white-space: nowrap; line-height: normal; }
+    .sum-desc { font-size: 10px; color: #ececec; line-height: 1.1; }
+    .sum-fine { font-size: 6px; color: rgba(255,255,255,0.2); font-style: italic; font-weight: 400; line-height: 1.1; }
     .sum-right { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; flex: 1; min-width: 0; }
     .crypto-tags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; width: 100%; }
 
@@ -427,8 +420,7 @@
       color: #ececec;
       text-align: center;
       white-space: nowrap;
-      font-variation-settings: 'wdth' 100;
-      line-height: 1.1;
+            line-height: 1.1;
       flex-shrink: 0;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s;
@@ -438,10 +430,10 @@
 
     /* ════ PAYMENT ════ */
     .pay-card { gap: 12px; justify-content: center; }
-    .pay-title { font-size: 20px; font-weight: 700; color: #ececec; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
-    .pay-sub { font-size: 10px; color: #ececec; text-align: center; line-height: 1.1; font-variation-settings: 'wdth' 100; }
+    .pay-title { font-size: 20px; font-weight: 900; color: #ececec; text-align: center; white-space: nowrap; line-height: normal; }
+    .pay-sub { font-size: 10px; color: #ececec; text-align: center; line-height: 1.1; }
     .stat-section { display: flex; flex-direction: column; gap: 10px; align-items: center; flex-shrink: 0; }
-    .stat-lbl { font-size: 10px; font-weight: 700; color: #ececec; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: normal; }
+    .stat-lbl { font-size: 10px; font-weight: 900; color: #ececec; text-align: center; white-space: nowrap; line-height: normal; }
     .stat-lbl.multi { white-space: normal; line-height: 1.1; }
     .stat-pill {
       background: rgba(255,255,255,0.05);
@@ -455,7 +447,7 @@
     .stat-pill.copyable:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
     .stat-dot { width: 8px; height: 8px; flex-shrink: 0; display: block; }
     .link-icon { width: 8.8px; height: 8.8px; flex-shrink: 0; display: block; }
-    .stat-txt { font-size: 8px; color: #ececec; text-align: center; white-space: nowrap; font-variation-settings: 'wdth' 100; line-height: 1.1; }
+    .stat-txt { font-size: 8px; color: #ececec; text-align: center; white-space: nowrap; line-height: 1.1; }
 
     /* ════ PULSE ════ */
     @keyframes pulse {
@@ -476,9 +468,8 @@
       padding: 8px 18px;
       border-radius: 999px;
       font-size: 9px;
-      font-family: 'Instrument Sans', sans-serif;
-      font-variation-settings: 'wdth' 100;
-      opacity: 0;
+      font-family: 'Overused Grotesk', sans-serif;
+            opacity: 0;
       transition: opacity 0.18s, transform 0.18s;
       pointer-events: none;
       z-index: 999;
@@ -497,6 +488,16 @@
 <div id="toast"></div>
 
 <div id="app">
+
+  <!-- ── persistent topbar ── -->
+  <div style="position:absolute;top:0;left:0;right:0;z-index:100;padding:32px 32px 0;display:flex;justify-content:space-between;align-items:center;pointer-events:none;">
+    <button onclick="if(window.Telegram&&Telegram.WebApp)Telegram.WebApp.close();else window.close();" style="pointer-events:auto;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;outline:none;padding:0;flex-shrink:0;">
+      <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 1.5l6 6M7.5 1.5l-6 6" stroke="#ececec" stroke-width="1.25" stroke-linecap="round"/></svg>
+    </button>
+    <div id="tg-pfp-wrap" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.06);outline:2px solid #00cbff;outline-offset:2px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+      <img id="tg-pfp-img" src="" style="width:100%;height:100%;object-fit:cover;display:none;" alt="">
+    </div>
+  </div>
 
   <!-- ══════════════════════════════ SCREEN 0 – UPLOAD ══════════════════════════════ -->
   <div class="screen active" id="s0">
@@ -620,7 +621,7 @@
       </div>
 
       <div class="card sel-card">
-        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:700;font-variation-settings:'wdth' 100;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
+        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Overused Grotesk',sans-serif;font-size:10px;font-weight:900;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
         <div style="display:flex;align-items:center;width:100%;">
           <div class="pill" id="emoji-count-pill">0 / 28 SELECTED</div>
         </div>
@@ -1361,6 +1362,18 @@ var VALID_TYPES = ['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp'];
 var VALID_EXTS  = ['svg', 'png', 'jpg', 'jpeg', 'webp'];
 
 var uploadCard    = document.getElementById('upload-card');
+
+/* ── Telegram profile picture ── */
+(function() {
+  try {
+    var user = Telegram.WebApp.initDataUnsafe.user;
+    if (user && user.photo_url) {
+      var img = document.getElementById('tg-pfp-img');
+      img.src = user.photo_url;
+      img.style.display = 'block';
+    }
+  } catch(e) {}
+})();
 
 var fileInput     = document.getElementById('file-input');
 var uploadEmpty   = document.getElementById('upload-empty');
