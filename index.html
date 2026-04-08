@@ -746,7 +746,12 @@
           <div class="pill" id="total-price">$0.00</div>
           <p class="sum-desc">We accept several<br>major cryptocurrencies<br>as payment.</p>
           <p class="sum-lbl" style="margin-top:2px;">DISCOUNT CODE</p>
-          <input id="discount-input" type="text" maxlength="20" spellcheck="false" placeholder="ENTER CODE" style="background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 10px;font-size:8px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#ececec;caret-color:#ececec;outline:none;white-space:nowrap;line-height:1.1;width:100%;text-transform:uppercase;letter-spacing:0.03em;" oninput="this.value=this.value.toUpperCase()">
+          <div style="display:flex;align-items:center;gap:6px;width:100%;">
+            <input id="discount-input" type="text" maxlength="20" spellcheck="false" placeholder="ENTER CODE" style="flex:1;min-width:0;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 10px;font-size:8px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#ececec;caret-color:#ececec;outline:none;line-height:1.1;text-transform:uppercase;letter-spacing:0.03em;" oninput="this.value=this.value.toUpperCase()">
+            <button id="discount-btn" onclick="handleDiscountBtn()" style="width:26px;height:26px;border-radius:50%;background:rgba(0,203,255,0.15);border:0.5px solid #55deff;display:flex;align-items:center;justify-content:center;cursor:pointer;outline:none;padding:0;flex-shrink:0;">
+              <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5h6M5 2l2.5 2.5L5 7" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
         <div class="sum-right">
           <p class="sum-lbl">PAY IN</p>
@@ -1061,7 +1066,9 @@ function updateTotal() {
     symPill.textContent = (ss === se.length && se.length > 0) ? 'DESELECT ALL' : 'SELECT ALL';
   }
   document.getElementById('emoji-count-pill').textContent = count + ' / ' + total + ' SELECTED';
-  document.getElementById('total-price').textContent = '$' + (count * 2).toFixed(2);
+  var base = count * 2;
+  var final = activeDiscount > 0 ? base * (1 - activeDiscount) : base;
+  document.getElementById('total-price').textContent = '$' + final.toFixed(2);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1260,6 +1267,11 @@ function triggerGeneration() {
             .then(function(r) { return r.json(); })
             .then(function(s) {
               if (s.status === 'done') {
+                if (appliedCode) {
+                  var usedCodes = JSON.parse(localStorage.getItem(USED_CODES_KEY) || '[]');
+                  if (usedCodes.indexOf(appliedCode) === -1) usedCodes.push(appliedCode);
+                  localStorage.setItem(USED_CODES_KEY, JSON.stringify(usedCodes));
+                }
                 pendingPackUrl = s.pack_url;
                 document.getElementById('pack-download-txt').textContent = 'OPEN EMOJI PACK (' + s.added + '/' + s.total + ')';
                 var dotEl = document.getElementById('pack-status-dot');
@@ -1359,6 +1371,43 @@ var VALID_TYPES = ['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp'];
 var VALID_EXTS  = ['svg', 'png', 'jpg', 'jpeg', 'webp'];
 
 var uploadCard    = document.getElementById('upload-card');
+
+/* ── discount codes ── */
+var DISCOUNT_CODES = { 'FAVCLIENTS50': 0.50, 'LAUNCH20': 0.20 };
+var activeDiscount = 0;
+var appliedCode    = '';
+var tgUserId = (function() { try { return String(Telegram.WebApp.initDataUnsafe.user.id); } catch(e) { return 'anon'; } })();
+var USED_CODES_KEY = 'emoticon_used_' + tgUserId;
+
+function handleDiscountBtn() {
+  var input = document.getElementById('discount-input');
+  var btn   = document.getElementById('discount-btn');
+  var arrowIcon = '<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5h6M5 2l2.5 2.5L5 7" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var xIcon     = '<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 2l5 5M7 2l-5 5" stroke="#fff" stroke-width="1.25" stroke-linecap="round"/></svg>';
+
+  if (appliedCode) {
+    appliedCode = ''; activeDiscount = 0;
+    input.disabled = false; input.value = '';
+    input.style.opacity = '1'; input.style.pointerEvents = '';
+    btn.style.background = 'rgba(0,203,255,0.15)'; btn.style.borderColor = '#55deff';
+    btn.innerHTML = arrowIcon;
+    updateTotal(); return;
+  }
+
+  var code = input.value.toUpperCase().trim();
+  var discount = DISCOUNT_CODES[code];
+  if (!discount) { showToast('INVALID CODE'); return; }
+
+  var usedCodes = JSON.parse(localStorage.getItem(USED_CODES_KEY) || '[]');
+  if (usedCodes.indexOf(code) !== -1) { showToast('CODE ALREADY USED'); return; }
+
+  appliedCode = code; activeDiscount = discount;
+  input.disabled = true; input.style.opacity = '0.35'; input.style.pointerEvents = 'none';
+  btn.style.background = 'rgba(255,255,255,0.05)'; btn.style.borderColor = 'rgba(255,255,255,0.1)';
+  btn.innerHTML = xIcon;
+  updateTotal();
+  showToast(Math.round(discount * 100) + '% DISCOUNT APPLIED');
+}
 
 /* ── Telegram profile picture ── */
 (function() {
