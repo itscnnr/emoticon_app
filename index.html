@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emoticon</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: 'Overused Grotesk';
-      src: url('fonts/OverusedGrotesk-VF.ttf') format('truetype');
-      font-weight: 100 900;
-      font-style: normal;
-    }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -21,7 +17,7 @@
       overflow: hidden;
       display: flex;
       justify-content: center;
-      font-family: 'Overused Grotesk', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     #app {
@@ -98,7 +94,7 @@
 
     .screen-title {
       font-size: 20px;
-      font-weight: 900;
+      font-weight: 700;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
@@ -132,7 +128,7 @@
       border-radius: 999px;
       padding: 5px 10px;
       font-size: 8px;
-      font-weight: 900;
+      font-weight: 700;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
@@ -151,7 +147,7 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      font-family: 'Overused Grotesk', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 8px;
       color: #ececec;
             white-space: nowrap;
@@ -164,7 +160,7 @@
     /* ── big title (inside cards) ── */
     .big-title {
       font-size: 20px;
-      font-weight: 900;
+      font-weight: 700;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
@@ -294,7 +290,7 @@
       background: none;
       border: none;
       outline: none;
-      font-family: 'Overused Grotesk', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
             letter-spacing: 0.06em;
       text-transform: uppercase;
       flex: 1;
@@ -357,7 +353,7 @@
       padding: 10px 16px;
       width: 100%;
       color: #ececec;
-      font-family: 'Overused Grotesk', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 10px;
             outline: none;
       flex-shrink: 0;
@@ -371,7 +367,7 @@
     .category { display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; }
     .cat-title {
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 700;
       color: #ececec;
       text-align: center;
       white-space: nowrap;
@@ -405,7 +401,7 @@
       flex-shrink: 0;
     }
     .sum-left { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex-shrink: 0; }
-    .sum-lbl { font-size: 10px; font-weight: 900; color: #ececec; white-space: nowrap; line-height: normal; }
+    .sum-lbl { font-size: 10px; font-weight: 700; color: #ececec; white-space: nowrap; line-height: normal; }
     .sum-desc { font-size: 10px; color: #ececec; line-height: 1.1; }
     .sum-fine { font-size: 6px; color: rgba(255,255,255,0.2); font-style: italic; font-weight: 400; line-height: 1.1; }
     .sum-right { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; flex: 1; min-width: 0; }
@@ -430,10 +426,10 @@
 
     /* ════ PAYMENT ════ */
     .pay-card { gap: 12px; justify-content: center; }
-    .pay-title { font-size: 20px; font-weight: 900; color: #ececec; text-align: center; white-space: nowrap; line-height: normal; }
+    .pay-title { font-size: 20px; font-weight: 700; color: #ececec; text-align: center; white-space: nowrap; line-height: normal; }
     .pay-sub { font-size: 10px; color: #ececec; text-align: center; line-height: 1.1; }
     .stat-section { display: flex; flex-direction: column; gap: 10px; align-items: center; flex-shrink: 0; }
-    .stat-lbl { font-size: 10px; font-weight: 900; color: #ececec; text-align: center; white-space: nowrap; line-height: normal; }
+    .stat-lbl { font-size: 10px; font-weight: 700; color: #ececec; text-align: center; white-space: nowrap; line-height: normal; }
     .stat-lbl.multi { white-space: normal; line-height: 1.1; }
     .stat-pill {
       background: rgba(255,255,255,0.05);
@@ -468,7 +464,7 @@
       padding: 8px 18px;
       border-radius: 999px;
       font-size: 9px;
-      font-family: 'Overused Grotesk', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
             opacity: 0;
       transition: opacity 0.18s, transform 0.18s;
       pointer-events: none;
@@ -621,7 +617,7 @@
       </div>
 
       <div class="card sel-card">
-        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Overused Grotesk',sans-serif;font-size:10px;font-weight:900;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
+        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Overused Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
         <div style="display:flex;align-items:center;width:100%;">
           <div class="pill" id="emoji-count-pill">0 / 28 SELECTED</div>
         </div>
