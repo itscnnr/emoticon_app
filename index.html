@@ -490,8 +490,49 @@
     <button onclick="if(window.Telegram&&Telegram.WebApp)Telegram.WebApp.close();else window.close();" style="pointer-events:auto;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;outline:none;padding:0;flex-shrink:0;">
       <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 1.5l6 6M7.5 1.5l-6 6" stroke="#ececec" stroke-width="1.25" stroke-linecap="round"/></svg>
     </button>
-    <div id="tg-pfp-wrap" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.06);outline:2px solid #00cbff;outline-offset:2px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+    <div id="tg-pfp-wrap" onclick="openReferralPopup()" style="pointer-events:auto;cursor:pointer;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.06);outline:2px solid #00cbff;outline-offset:2px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
       <img id="tg-pfp-img" src="" style="width:100%;height:100%;object-fit:cover;display:none;" alt="">
+    </div>
+  </div>
+
+  <!-- ── Referral popup overlay ── -->
+  <div id="referral-overlay" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;" onclick="if(event.target===this)closeReferralPopup()">
+    <div style="background:#1a1a1a;border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;width:300px;display:flex;flex-direction:column;gap:16px;align-items:center;">
+      <p style="font-size:10px;font-weight:700;color:#ececec;letter-spacing:0.05em;font-family:'Space Grotesk',sans-serif;">REFERRAL CODE</p>
+
+      <!-- No code yet: create -->
+      <div id="ref-create" style="display:none;width:100%;flex-direction:column;gap:10px;align-items:center;">
+        <p style="font-size:8px;color:rgba(255,255,255,0.4);text-align:center;font-family:'Space Grotesk',sans-serif;line-height:1.3;">Create a referral code. When someone uses it, they get 10% off and you earn 25% of their pack price.</p>
+        <div style="display:flex;align-items:center;gap:6px;width:75%;">
+          <input id="ref-code-input" type="text" maxlength="12" spellcheck="false" placeholder="YOUR CODE" style="flex:1;min-width:0;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 10px;font-size:8px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#ececec;caret-color:#ececec;outline:none;line-height:1.1;text-transform:uppercase;letter-spacing:0.03em;" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9_]/g,'')">
+          <button onclick="createReferralCode()" style="border-radius:50%;background:rgba(0,203,255,0.15);border:0.5px solid #55deff;display:flex;align-items:center;justify-content:center;cursor:pointer;outline:none;padding:5px;flex-shrink:0;">
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1.5v6M1.5 4.5h6" stroke="#fff" stroke-width="1.25" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Has code: display -->
+      <div id="ref-display" style="display:none;width:100%;flex-direction:column;gap:10px;align-items:center;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span id="ref-code-text" style="font-size:14px;font-weight:700;color:#00cbff;letter-spacing:0.08em;font-family:'Space Grotesk',sans-serif;"></span>
+          <button onclick="copyReferralCode()" style="background:none;border:none;cursor:pointer;padding:2px;outline:none;">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style="display:block;"><rect x="0.75" y="2.75" width="6" height="6.5" rx="1.25" stroke="#ececec" stroke-width="1.25"/><path d="M3 2.75V2A1.25 1.25 0 014.25.75h3.5A1.25 1.25 0 019 2v5.25A1.25 1.25 0 017.75 8.5H7.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <span id="ref-earnings" style="font-size:16px;font-weight:700;color:#ececec;font-family:'Space Grotesk',sans-serif;">$0.00</span>
+            <span style="font-size:7px;color:rgba(255,255,255,0.35);font-family:'Space Grotesk',sans-serif;letter-spacing:0.05em;">EARNED</span>
+          </div>
+          <div style="width:0.5px;height:24px;background:rgba(255,255,255,0.1);"></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <span id="ref-uses" style="font-size:16px;font-weight:700;color:#ececec;font-family:'Space Grotesk',sans-serif;">0</span>
+            <span style="font-size:7px;color:rgba(255,255,255,0.35);font-family:'Space Grotesk',sans-serif;letter-spacing:0.05em;">REFERRALS</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="closeReferralPopup()" style="background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 16px;font-size:8px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:rgba(255,255,255,0.5);cursor:pointer;outline:none;letter-spacing:0.03em;">CLOSE</button>
     </div>
   </div>
 
@@ -1249,6 +1290,9 @@ function triggerGeneration() {
   formData.append('selected_logo_emojis',   JSON.stringify(getSelectedLogoIndices()));
   formData.append('selected_symbol_emojis', JSON.stringify(getSelectedSymbolIndices()));
   formData.append('pack_name',              getPackName());
+  if (activeReferralCode) {
+    formData.append('referral_code', activeReferralCode);
+  }
 
   var userId = getTelegramUserId();
 
@@ -1386,7 +1430,7 @@ function handleDiscountBtn() {
   var xIcon     = '<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 2l5 5M7 2l-5 5" stroke="#fff" stroke-width="1.25" stroke-linecap="round"/></svg>';
 
   if (appliedCode) {
-    appliedCode = ''; activeDiscount = 0;
+    appliedCode = ''; activeDiscount = 0; activeReferralCode = '';
     input.disabled = false; input.value = '';
     input.style.opacity = '1'; input.style.pointerEvents = '';
     btn.style.background = 'rgba(0,203,255,0.15)'; btn.style.borderColor = '#55deff';
@@ -1396,17 +1440,43 @@ function handleDiscountBtn() {
 
   var code = input.value.toUpperCase().trim();
   var discount = DISCOUNT_CODES[code];
-  if (!discount) { showToast('INVALID CODE'); return; }
 
-  var usedCodes = JSON.parse(localStorage.getItem(USED_CODES_KEY) || '[]');
-  if (usedCodes.indexOf(code) !== -1) { showToast('CODE ALREADY USED'); return; }
+  if (discount) {
+    // Static discount code
+    var usedCodes = JSON.parse(localStorage.getItem(USED_CODES_KEY) || '[]');
+    if (usedCodes.indexOf(code) !== -1) { showToast('CODE ALREADY USED'); return; }
+    appliedCode = code; activeDiscount = discount; activeReferralCode = '';
+    input.disabled = true; input.style.opacity = '0.35'; input.style.pointerEvents = 'none';
+    btn.style.background = 'rgba(255,255,255,0.05)'; btn.style.borderColor = 'rgba(255,255,255,0.1)';
+    btn.innerHTML = xIcon;
+    updateTotal();
+    showToast(Math.round(discount * 100) + '% DISCOUNT APPLIED');
+    return;
+  }
 
-  appliedCode = code; activeDiscount = discount;
-  input.disabled = true; input.style.opacity = '0.35'; input.style.pointerEvents = 'none';
-  btn.style.background = 'rgba(255,255,255,0.05)'; btn.style.borderColor = 'rgba(255,255,255,0.1)';
-  btn.innerHTML = xIcon;
-  updateTotal();
-  showToast(Math.round(discount * 100) + '% DISCOUNT APPLIED');
+  // Try as referral code
+  var uid = tgUserId;
+  if (!uid || uid === 'anon') { showToast('INVALID CODE'); return; }
+  fetch(BACKEND_URL + '/referral/validate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code: code, telegram_user_id: uid })
+  })
+    .then(function(r) {
+      if (!r.ok) return r.json().then(function(d) { throw new Error(d.detail || 'Invalid code'); });
+      return r.json();
+    })
+    .then(function(data) {
+      appliedCode = code; activeDiscount = data.discount_pct / 100; activeReferralCode = code;
+      input.disabled = true; input.style.opacity = '0.35'; input.style.pointerEvents = 'none';
+      btn.style.background = 'rgba(255,255,255,0.05)'; btn.style.borderColor = 'rgba(255,255,255,0.1)';
+      btn.innerHTML = xIcon;
+      updateTotal();
+      showToast(data.discount_pct + '% REFERRAL DISCOUNT APPLIED');
+    })
+    .catch(function(err) {
+      showToast(err.message.toUpperCase());
+    });
 }
 
 /* ── Telegram profile picture ── */
@@ -1420,6 +1490,85 @@ function handleDiscountBtn() {
     }
   } catch(e) {}
 })();
+
+/* ── Referral system ── */
+var activeReferralCode = '';
+
+function openReferralPopup() {
+  var overlay = document.getElementById('referral-overlay');
+  overlay.style.display = 'flex';
+  var uid = tgUserId;
+  if (!uid || uid === 'anon') {
+    document.getElementById('ref-create').style.display = 'flex';
+    document.getElementById('ref-display').style.display = 'none';
+    return;
+  }
+  fetch(BACKEND_URL + '/referral/' + uid)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.has_code) {
+        document.getElementById('ref-code-text').textContent = data.code;
+        document.getElementById('ref-earnings').textContent = '$' + (data.total_earnings || 0).toFixed(2);
+        document.getElementById('ref-uses').textContent = data.total_uses || 0;
+        document.getElementById('ref-create').style.display = 'none';
+        document.getElementById('ref-display').style.display = 'flex';
+      } else {
+        document.getElementById('ref-create').style.display = 'flex';
+        document.getElementById('ref-display').style.display = 'none';
+      }
+    })
+    .catch(function() {
+      document.getElementById('ref-create').style.display = 'flex';
+      document.getElementById('ref-display').style.display = 'none';
+    });
+}
+
+function closeReferralPopup() {
+  document.getElementById('referral-overlay').style.display = 'none';
+}
+
+function createReferralCode() {
+  var code = document.getElementById('ref-code-input').value.trim();
+  if (!code) { showToast('ENTER A CODE'); return; }
+  var uid = tgUserId;
+  var user = {};
+  try { user = Telegram.WebApp.initDataUnsafe.user || {}; } catch(e) {}
+  fetch(BACKEND_URL + '/referral/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      telegram_user_id: uid,
+      code: code,
+      username: user.username || '',
+      first_name: user.first_name || '',
+      last_name: user.last_name || ''
+    })
+  })
+    .then(function(r) {
+      if (!r.ok) return r.json().then(function(d) { throw new Error(d.detail || 'Failed'); });
+      return r.json();
+    })
+    .then(function(data) {
+      showToast('CODE CREATED');
+      document.getElementById('ref-code-text').textContent = data.code;
+      document.getElementById('ref-earnings').textContent = '$0.00';
+      document.getElementById('ref-uses').textContent = '0';
+      document.getElementById('ref-create').style.display = 'none';
+      document.getElementById('ref-display').style.display = 'flex';
+    })
+    .catch(function(err) {
+      showToast(err.message.toUpperCase());
+    });
+}
+
+function copyReferralCode() {
+  var code = document.getElementById('ref-code-text').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).then(function() { showToast('COPIED TO CLIPBOARD'); });
+  } else {
+    showToast('COPY: ' + code);
+  }
+}
 
 var fileInput     = document.getElementById('file-input');
 var uploadEmpty   = document.getElementById('upload-empty');
