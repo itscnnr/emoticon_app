@@ -1555,12 +1555,13 @@ function handleDiscountBtn() {
   }
 
   // Try as referral code
+  if (!code) { showToast('ENTER A CODE'); return; }
   var uid = tgUserId;
   if (!uid || uid === 'anon') { showToast('INVALID CODE'); return; }
   fetch(BACKEND_URL + '/referral/validate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code: code, telegram_user_id: uid })
+    body: JSON.stringify({ code: code, telegram_user_id: parseInt(uid) || uid })
   })
     .then(function(r) {
       if (!r.ok) return r.json().then(function(d) { throw new Error(d.detail || 'Invalid code'); });
@@ -1575,7 +1576,7 @@ function handleDiscountBtn() {
       showToast(data.discount_pct + '% REFERRAL DISCOUNT APPLIED');
     })
     .catch(function(err) {
-      showToast(err.message.toUpperCase());
+      showToast((err.message || 'INVALID CODE').toUpperCase());
     });
 }
 
