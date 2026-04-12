@@ -838,10 +838,7 @@
       </div>
       <div class="card grow pay-card">
         <p class="pay-title">PAYMENT PROCESSING</p>
-        <p class="pay-sub" id="pay-sub-text">Scan QR or copy the address below<br>to send payment from your wallet.</p>
-        <div id="pay-qr-wrap" style="display:none;align-items:center;justify-content:center;margin:4px 0;">
-          <img id="pay-qr-img" src="" alt="QR" style="width:140px;height:140px;border-radius:10px;">
-        </div>
+        <p class="pay-sub">Copy the address below and send<br>payment from your wallet.</p>
         <div class="stat-section">
           <p class="stat-lbl">STATUS</p>
           <div class="stat-pill">
@@ -868,13 +865,6 @@
           <div class="stat-pill copyable" id="pay-addr-pill" onclick="copyPayAddress()" title="Click to copy">
             <svg class="link-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" style="flex-shrink:0;display:block;"><rect x="0.75" y="2.75" width="6" height="6.5" rx="1.25" stroke="#ececec" stroke-width="1.25"/><path d="M3 2.75V2A1.25 1.25 0 014.25.75h3.5A1.25 1.25 0 019 2v5.25A1.25 1.25 0 017.75 8.5H7.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="stat-txt" id="pay-address">—</span>
-          </div>
-        </div>
-        <div class="stat-section" id="pay-conf-section" style="display:none;">
-          <p class="stat-lbl">CONFIRMATIONS</p>
-          <div class="stat-pill">
-            <svg class="stat-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#00cbff"/></svg>
-            <span class="stat-txt" id="pay-conf-txt">0 / 1</span>
           </div>
         </div>
       </div>
@@ -1181,8 +1171,6 @@ var GENERATE_URL = 'https://web-production-9e9bf.up.railway.app';
 
 var currentOrderId  = null;
 var pollInterval    = null;
-var currentRequiredConfs = 1;
-var ORDER_STORAGE_KEY = 'emoticon_pending_order_' + tgUserId;
 
 function goToPayment() {
   var rawName = (document.getElementById('pack-name-input').value || '').trim();
@@ -1192,19 +1180,16 @@ function goToPayment() {
     showToast('NO "' + chars + '" ALLOWED', 3000);
     return;
   }
-
-  resetPaymentUI();
+  document.getElementById('pay-amount').textContent  = 'FETCHING…';
+  document.getElementById('pay-address').textContent = '—';
+  document.getElementById('pay-network').textContent = '—';
   goTo(3);
-
   fetch(BACKEND_URL + '/order/create', {
     method:  'POST',
     headers: {'Content-Type': 'application/json'},
     body:    JSON.stringify({
-      crypto:           selectedCrypto,
-      price_usd:        parseFloat(document.getElementById('total-price').textContent.replace('$', '')) || 0,
-      telegram_user_id: tgUserId,
-      referral_code:    activeReferralCode || '',
-      discount_pct:     activeDiscount * 100,
+      crypto:    selectedCrypto,
+      price_usd: parseFloat(document.getElementById('total-price').textContent.replace('$', '')) || 0,
     }),
   })
     .then(function(r) {
@@ -1213,43 +1198,16 @@ function goToPayment() {
     })
     .then(function(data) {
       currentOrderId = data.order_id;
-      currentRequiredConfs = data.required_confs || 1;
-      populatePaymentScreen(data);
-      // Save to localStorage so user can resume
-      localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify({
-        order_id: data.order_id, crypto: data.crypto
-      }));
+      document.getElementById('pay-amount').textContent  = data.amount_display;
+      document.getElementById('pay-address').textContent = data.address;
+      document.getElementById('pay-network').textContent = cryptoNetworks[data.crypto] || data.crypto;
+      var nd2 = document.getElementById('pay-network-dot');
+      if (nd2) nd2.querySelector('circle').setAttribute('fill', cryptoColor[data.crypto] || 'rgba(255,255,255,0.2)');
       startPolling();
     })
     .catch(function() {
       document.getElementById('pay-amount').textContent = 'ERROR — TRY AGAIN';
     });
-}
-
-function resetPaymentUI() {
-  document.getElementById('pay-amount').textContent  = 'FETCHING…';
-  document.getElementById('pay-address').textContent = '—';
-  document.getElementById('pay-network').textContent = '—';
-  document.getElementById('pay-status-txt').textContent = 'AWAITING PAYMENT';
-  document.getElementById('pay-sub-text').innerHTML = 'Scan QR or copy the address below<br>to send payment from your wallet.';
-  var dot = document.getElementById('pay-status-dot');
-  if (dot) { dot.querySelector('circle').setAttribute('fill', '#F59E0B'); dot.classList.add('pulse-dot'); }
-  document.getElementById('pay-qr-wrap').style.display = 'none';
-  document.getElementById('pay-conf-section').style.display = 'none';
-}
-
-function populatePaymentScreen(data) {
-  document.getElementById('pay-amount').textContent  = data.amount_display;
-  document.getElementById('pay-address').textContent = data.address;
-  document.getElementById('pay-network').textContent = cryptoNetworks[data.crypto] || data.crypto;
-  var nd2 = document.getElementById('pay-network-dot');
-  if (nd2) nd2.querySelector('circle').setAttribute('fill', cryptoColor[data.crypto] || 'rgba(255,255,255,0.2)');
-  if (data.qr_code) {
-    document.getElementById('pay-qr-img').src = data.qr_code;
-    document.getElementById('pay-qr-wrap').style.display = 'flex';
-  }
-  currentRequiredConfs = data.required_confs || 1;
-  document.getElementById('pay-conf-txt').textContent = '0 / ' + currentRequiredConfs;
 }
 
 function startPolling() {
@@ -1259,76 +1217,16 @@ function startPolling() {
     fetch(BACKEND_URL + '/order/' + currentOrderId + '/status')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var dot = document.getElementById('pay-status-dot');
-        var txt = document.getElementById('pay-status-txt');
-        var confSection = document.getElementById('pay-conf-section');
-
-        if (data.status === 'confirmed' || data.status === 'swept') {
+        if (data.status === 'confirmed') {
           clearInterval(pollInterval);
-          localStorage.removeItem(ORDER_STORAGE_KEY);
-          if (dot) dot.querySelector('circle').setAttribute('fill', '#22C55E');
-          txt.textContent = 'PAYMENT CONFIRMED';
-          document.getElementById('pay-sub-text').innerHTML = 'Payment received and confirmed.<br>Generating your pack now…';
-          confSection.style.display = 'block';
-          document.getElementById('pay-conf-txt').textContent = data.confirmations + ' / ' + (data.required_confs || currentRequiredConfs);
+          document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#22C55E');
+          document.getElementById('pay-status-txt').textContent = 'PAYMENT RECEIVED';
           setTimeout(function() { goTo(4); triggerGeneration(); }, 1500);
-        } else if (data.status === 'confirming') {
-          if (dot) dot.querySelector('circle').setAttribute('fill', '#00cbff');
-          txt.textContent = 'CONFIRMING';
-          confSection.style.display = 'block';
-          document.getElementById('pay-conf-txt').textContent = data.confirmations + ' / ' + (data.required_confs || currentRequiredConfs);
-        } else if (data.status === 'mempool') {
-          if (dot) dot.querySelector('circle').setAttribute('fill', '#00cbff');
-          txt.textContent = 'PAYMENT DETECTED';
-          document.getElementById('pay-sub-text').innerHTML = 'Transaction found in mempool.<br>Waiting for confirmations…';
-          confSection.style.display = 'block';
-          document.getElementById('pay-conf-txt').textContent = '0 / ' + (data.required_confs || currentRequiredConfs);
-        } else if (data.status === 'expired') {
-          clearInterval(pollInterval);
-          localStorage.removeItem(ORDER_STORAGE_KEY);
-          if (dot) { dot.querySelector('circle').setAttribute('fill', '#EF4444'); dot.classList.remove('pulse-dot'); }
-          txt.textContent = 'ORDER EXPIRED';
         }
       })
       .catch(function() {});
-  }, 10000);
+  }, 15000);
 }
-
-// Check for pending order on app load (user returning after closing)
-(function checkPendingOrder() {
-  try {
-    var saved = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY));
-    if (!saved || !saved.order_id) return;
-    var uid = tgUserId;
-    if (!uid || uid === 'anon') return;
-    fetch(BACKEND_URL + '/order/resume/' + uid)
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (!data.has_pending) { localStorage.removeItem(ORDER_STORAGE_KEY); return; }
-        // Restore payment screen
-        currentOrderId = data.order_id;
-        currentRequiredConfs = data.required_confs || 1;
-        selectedCrypto = data.crypto;
-        resetPaymentUI();
-        populatePaymentScreen(data);
-        // Update status display based on current state
-        if (data.status === 'mempool') {
-          document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#00cbff');
-          document.getElementById('pay-status-txt').textContent = 'PAYMENT DETECTED';
-          document.getElementById('pay-sub-text').innerHTML = 'Transaction found in mempool.<br>Waiting for confirmations…';
-          document.getElementById('pay-conf-section').style.display = 'block';
-        } else if (data.status === 'confirming') {
-          document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#00cbff');
-          document.getElementById('pay-status-txt').textContent = 'CONFIRMING';
-          document.getElementById('pay-conf-section').style.display = 'block';
-          document.getElementById('pay-conf-txt').textContent = data.confirmations + ' / ' + data.required_confs;
-        }
-        goTo(3);
-        startPolling();
-      })
-      .catch(function() {});
-  } catch(e) {}
-})();
 
 /* ═══════════════════════════════════════════════════
    EMOJI GENERATION
