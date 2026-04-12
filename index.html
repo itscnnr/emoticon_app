@@ -785,27 +785,13 @@
         <div class="sum-left">
           <p class="sum-lbl">TOTAL</p>
           <div class="pill" id="total-price">$0.00</div>
-          <p class="sum-desc">We accept several<br>major cryptocurrencies<br>as payment.</p>
+          <p class="sum-desc">Pay with any major<br>cryptocurrency via OxaPay.</p>
           <p class="sum-lbl" style="margin-top:2px;">DISCOUNT CODE</p>
           <div style="display:flex;align-items:center;gap:6px;width:75%;">
             <input id="discount-input" type="text" maxlength="20" spellcheck="false" placeholder="ENTER CODE" style="flex:1;min-width:0;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 10px;font-size:8px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#ececec;caret-color:#ececec;outline:none;line-height:1.1;text-transform:uppercase;letter-spacing:0.03em;" oninput="this.value=this.value.toUpperCase()">
             <button id="discount-btn" onclick="handleDiscountBtn()" style="border-radius:50%;background:rgba(0,203,255,0.15);border:0.5px solid #55deff;display:flex;align-items:center;justify-content:center;cursor:pointer;outline:none;padding:5px;flex-shrink:0;">
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5h6M5 2l2.5 2.5L5 7" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-          </div>
-        </div>
-        <div class="sum-right">
-          <p class="sum-lbl">PAY IN</p>
-          <div class="crypto-tags">
-            <div class="crypto-pill" data-crypto="BTC"  onclick="selectCrypto(this)">BTC</div>
-            <div class="crypto-pill" data-crypto="ETH"  onclick="selectCrypto(this)">ETH</div>
-            <div class="crypto-pill" data-crypto="LTC"  onclick="selectCrypto(this)">LTC</div>
-            <div class="crypto-pill" data-crypto="SOL"  onclick="selectCrypto(this)">SOL</div>
-            <div class="crypto-pill" data-crypto="TON"  onclick="selectCrypto(this)">TON</div>
-            <div class="crypto-pill" data-crypto="TRX"  onclick="selectCrypto(this)">TRX</div>
-            <div class="crypto-pill" data-crypto="XRP"  onclick="selectCrypto(this)">XRP</div>
-            <div class="crypto-pill" data-crypto="USDT" onclick="selectCrypto(this)">USDT (ERC)</div>
-            <div class="crypto-pill" data-crypto="USDC" onclick="selectCrypto(this)">USDC (SOL)</div>
           </div>
         </div>
       </div>
@@ -837,8 +823,8 @@
         <div class="progress-dots"><div class="progress-dot"></div><div class="progress-dot"></div><div class="progress-dot"></div><div class="progress-dot active"></div></div>
       </div>
       <div class="card grow pay-card">
-        <p class="pay-title">PAYMENT PROCESSING</p>
-        <p class="pay-sub">Copy the address below and send<br>payment from your wallet.</p>
+        <p class="pay-title">AWAITING PAYMENT</p>
+        <p class="pay-sub">Complete your payment in the<br>OxaPay window that just opened.</p>
         <div class="stat-section">
           <p class="stat-lbl">STATUS</p>
           <div class="stat-pill">
@@ -846,27 +832,7 @@
             <span class="stat-txt" id="pay-status-txt">AWAITING PAYMENT</span>
           </div>
         </div>
-        <div class="stat-section">
-          <p class="stat-lbl">NETWORK</p>
-          <div class="stat-pill">
-            <svg id="pay-network-dot" class="stat-dot" width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="rgba(255,255,255,0.2)"/></svg>
-            <span class="stat-txt" id="pay-network">—</span>
-          </div>
-        </div>
-        <div class="stat-section">
-          <p class="stat-lbl">AMOUNT (CLICK TO COPY)</p>
-          <div class="stat-pill copyable" id="pay-amount-pill" onclick="copyPayAmount()" title="Click to copy">
-            <svg class="link-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" style="flex-shrink:0;display:block;"><rect x="0.75" y="2.75" width="6" height="6.5" rx="1.25" stroke="#ececec" stroke-width="1.25"/><path d="M3 2.75V2A1.25 1.25 0 014.25.75h3.5A1.25 1.25 0 019 2v5.25A1.25 1.25 0 017.75 8.5H7.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="stat-txt" id="pay-amount">FETCHING…</span>
-          </div>
-        </div>
-        <div class="stat-section">
-          <p class="stat-lbl">SEND TO (CLICK TO COPY)</p>
-          <div class="stat-pill copyable" id="pay-addr-pill" onclick="copyPayAddress()" title="Click to copy">
-            <svg class="link-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" style="flex-shrink:0;display:block;"><rect x="0.75" y="2.75" width="6" height="6.5" rx="1.25" stroke="#ececec" stroke-width="1.25"/><path d="M3 2.75V2A1.25 1.25 0 014.25.75h3.5A1.25 1.25 0 019 2v5.25A1.25 1.25 0 017.75 8.5H7.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="stat-txt" id="pay-address">—</span>
-          </div>
-        </div>
+        <button onclick="reopenOxaPay()" style="margin-top:8px;background:rgba(0,203,255,0.12);border:0.5px solid #55deff;border-radius:999px;color:#ececec;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.08em;padding:6px 16px;cursor:pointer;outline:none;">OPEN OXAPAY</button>
       </div>
       <div class="nav">
         <button class="btn" onclick="goTo(2)">
@@ -1115,52 +1081,11 @@ function updateTotal() {
 /* ═══════════════════════════════════════════════════
    CRYPTO PILLS
 ═══════════════════════════════════════════════════ */
-var cryptoBg     = { BTC:'rgba(247,147,26,0.18)',  ETH:'rgba(98,126,234,0.18)',  LTC:'rgba(52,93,157,0.18)',   SOL:'rgba(153,69,255,0.18)', TON:'rgba(0,136,204,0.18)',  XMR:'rgba(255,102,0,0.18)',  TRX:'rgba(234,42,29,0.18)',  XRP:'rgba(0,170,228,0.18)',  USDT:'rgba(38,161,123,0.18)',  USDC:'rgba(39,117,202,0.18)'  };
-var cryptoColor  = { BTC:'#F7931A', ETH:'#627EEA', LTC:'#345D9D', SOL:'#9945FF', TON:'#0098EA', TRX:'#EA2A1D', XRP:'#00AAE4', USDT:'#26A17B', USDC:'#2775CA' };
-var cryptoBorder = { BTC:'rgba(247,147,26,0.55)',  ETH:'rgba(98,126,234,0.55)',  LTC:'rgba(52,93,157,0.55)',   SOL:'rgba(153,69,255,0.55)', TON:'rgba(0,136,204,0.55)',  XMR:'rgba(255,102,0,0.55)',  TRX:'rgba(234,42,29,0.55)',  XRP:'rgba(0,170,228,0.55)',  USDT:'rgba(38,161,123,0.55)',  USDC:'rgba(39,117,202,0.55)'  };
-
-var cryptoAddresses = {
-  BTC:  'bc1qg6334flxws404z56zaha9kqmqcpq5mtjm9nzjy',
-  ETH:  '0xE08aFc8A63d1482360A714d15f5c58C7C92c1a03',
-  LTC:  'LKaecJbXuLTG5bYtYva7ZxL4PMFTaVmDFu',
-  SOL:  'HbsrsQHiMf3pntxXMGLj8QjreNx8ofzK4bk9jrQaNdzY',
-  TON:  'UQCgJb4ASNDWl_WF9an-GG_TiJLP-M6P3SnZoLBiC6nbysFv',
-  XMR:  '883wBVJ5FMGV4g9rqr67CsQw2qYTu5kf7F34NWrYwWmZDfHRtSg1QxGFAfcaCPkasQDhfSqrbuTvjXc2SQxwHPHe3JTNsRA',
-  TRX:  'TJAQyFquxBt7VRdFXaVufyc5Vn3LbAX6KP',
-  XRP:  'rBBvKLBXk4z9h9Gw2bpuSy1WB9xcbuC6Em',
-  USDT: '0xE08aFc8A63d1482360A714d15f5c58C7C92c1a03',
-  USDC: 'HbsrsQHiMf3pntxXMGLj8QjreNx8ofzK4bk9jrQaNdzY'
-};
-
-var cryptoNetworks = {
-  BTC:  'Bitcoin',        ETH:  'Ethereum',
-  LTC:  'Litecoin',       SOL:  'Solana',
-  TON:  'TON',            XMR:  'Monero',
-  TRX:  'TRON',           XRP:  'XRP Ledger',
-  USDT: 'Ethereum (ERC-20)', USDC: 'Solana (SPL)'
-};
-
-var selectedCrypto = null;
-
-function selectCrypto(el) {
-  document.querySelectorAll('.crypto-pill').forEach(function(p) {
-    p.style.background  = '';
-    p.style.borderColor = '';
-  });
-  var key = el.dataset.crypto;
-  selectedCrypto = key;
-  var nd = document.getElementById('pay-network-dot');
-  if (nd) nd.querySelector('circle').setAttribute('fill', cryptoColor[key] || 'rgba(255,255,255,0.2)');
-  el.style.background  = cryptoBg[key]     || 'rgba(255,255,255,0.12)';
-  el.style.borderColor = cryptoBorder[key] || 'rgba(255,255,255,0.4)';
-  checkSelReady();
-}
 
 function checkSelReady() {
   var emojiCount = document.querySelectorAll('#s2 .emoji.sel').length;
-  var ready = emojiCount > 0 && !!selectedCrypto;
   var btn = document.getElementById('s2-payment');
-  btn.classList.toggle('off', !ready);
+  btn.classList.toggle('off', emojiCount === 0);
 }
 
 // ← swap this for your Railway URL once deployed
@@ -1169,8 +1094,9 @@ var BACKEND_URL = 'https://web-production-9e9bf.up.railway.app';
 // ← swap this for your generation service Railway URL once deployed
 var GENERATE_URL = 'https://web-production-9e9bf.up.railway.app';
 
-var currentOrderId  = null;
-var pollInterval    = null;
+var currentOrderId = null;
+var pollInterval   = null;
+var oxaPayUrl      = null;
 
 function goToPayment() {
   var rawName = (document.getElementById('pack-name-input').value || '').trim();
@@ -1180,15 +1106,12 @@ function goToPayment() {
     showToast('NO "' + chars + '" ALLOWED', 3000);
     return;
   }
-  document.getElementById('pay-amount').textContent  = 'FETCHING…';
-  document.getElementById('pay-address').textContent = '—';
-  document.getElementById('pay-network').textContent = '—';
+  document.getElementById('pay-status-txt').textContent = 'OPENING OXAPAY…';
   goTo(3);
   fetch(BACKEND_URL + '/order/create', {
     method:  'POST',
     headers: {'Content-Type': 'application/json'},
     body:    JSON.stringify({
-      crypto:    selectedCrypto,
       price_usd: parseFloat(document.getElementById('total-price').textContent.replace('$', '')) || 0,
     }),
   })
@@ -1197,17 +1120,29 @@ function goToPayment() {
       return r.json();
     })
     .then(function(data) {
-      currentOrderId = data.order_id;
-      document.getElementById('pay-amount').textContent  = data.amount_display;
-      document.getElementById('pay-address').textContent = data.address;
-      document.getElementById('pay-network').textContent = cryptoNetworks[data.crypto] || data.crypto;
-      var nd2 = document.getElementById('pay-network-dot');
-      if (nd2) nd2.querySelector('circle').setAttribute('fill', cryptoColor[data.crypto] || 'rgba(255,255,255,0.2)');
+      currentOrderId = data.track_id;
+      oxaPayUrl = data.payment_url;
+      document.getElementById('pay-status-txt').textContent = 'AWAITING PAYMENT';
+      if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
+        Telegram.WebApp.openLink(data.payment_url);
+      } else {
+        window.open(data.payment_url, '_blank');
+      }
       startPolling();
     })
     .catch(function() {
-      document.getElementById('pay-amount').textContent = 'ERROR — TRY AGAIN';
+      document.getElementById('pay-status-txt').textContent = 'ERROR — TRY AGAIN';
+      document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#EF4444');
     });
+}
+
+function reopenOxaPay() {
+  if (!oxaPayUrl) return;
+  if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
+    Telegram.WebApp.openLink(oxaPayUrl);
+  } else {
+    window.open(oxaPayUrl, '_blank');
+  }
 }
 
 function startPolling() {
@@ -1225,7 +1160,7 @@ function startPolling() {
         }
       })
       .catch(function() {});
-  }, 15000);
+  }, 10000);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1369,15 +1304,6 @@ function downloadPack() {
   a.click();
 }
 
-function copyPayAmount() {
-  var txt = document.getElementById('pay-amount').textContent;
-  if (txt && txt !== 'FETCHING…' && txt !== 'ERROR — TRY AGAIN' && txt !== '—') copyText(txt);
-}
-
-function copyPayAddress() {
-  var addr = document.getElementById('pay-address').textContent;
-  if (addr && addr !== '—') copyText(addr);
-}
 
 /* ═══════════════════════════════════════════════════
    CLIPBOARD + TOAST
