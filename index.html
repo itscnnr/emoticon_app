@@ -785,7 +785,7 @@
         <div class="sum-left">
           <p class="sum-lbl">TOTAL</p>
           <div class="pill" id="total-price">$0.00</div>
-          <p class="sum-desc">Pay with any major<br>cryptocurrency via OxaPay.</p>
+          <p class="sum-desc">Pay with any major<br>cryptocurrency via Plisio.</p>
           <p class="sum-lbl" style="margin-top:2px;">DISCOUNT CODE</p>
           <div style="display:flex;align-items:center;gap:6px;width:75%;">
             <input id="discount-input" type="text" maxlength="20" spellcheck="false" placeholder="ENTER CODE" style="flex:1;min-width:0;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 10px;font-size:8px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:#ececec;caret-color:#ececec;outline:none;line-height:1.1;text-transform:uppercase;letter-spacing:0.03em;" oninput="this.value=this.value.toUpperCase()">
@@ -824,7 +824,7 @@
       </div>
       <div class="card grow pay-card">
         <p class="pay-title">AWAITING PAYMENT</p>
-        <p class="pay-sub">Complete your payment in the<br>OxaPay window that just opened.</p>
+        <p class="pay-sub">Complete your payment in the<br>window that just opened.</p>
         <div class="stat-section">
           <p class="stat-lbl">STATUS</p>
           <div class="stat-pill">
@@ -832,7 +832,7 @@
             <span class="stat-txt" id="pay-status-txt">AWAITING PAYMENT</span>
           </div>
         </div>
-        <button onclick="reopenOxaPay()" style="margin-top:8px;background:rgba(0,203,255,0.12);border:0.5px solid #55deff;border-radius:999px;color:#ececec;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.08em;padding:6px 16px;cursor:pointer;outline:none;">OPEN OXAPAY</button>
+        <button onclick="reopenPayment()" style="margin-top:8px;background:rgba(0,203,255,0.12);border:0.5px solid #55deff;border-radius:999px;color:#ececec;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.08em;padding:6px 16px;cursor:pointer;outline:none;">OPEN PAYMENT</button>
       </div>
       <div class="nav">
         <button class="btn" onclick="goTo(2)">
@@ -1096,8 +1096,7 @@ var GENERATE_URL = 'https://web-production-9e9bf.up.railway.app';
 
 var currentOrderId = null;
 var pollInterval   = null;
-var oxaPayUrl      = null;
-var OXAPAY_KEY     = 'V9WZPX-DMJDDK-YBDG6I-ULNHBO';
+var paymentUrl     = null;
 
 function goToPayment() {
   var rawName = (document.getElementById('pack-name-input').value || '').trim();
@@ -1114,58 +1113,41 @@ function goToPayment() {
   document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#F59E0B');
   goTo(3);
 
-  /* Call OxaPay v1 API directly from the browser (server IPs are Cloudflare-blocked) */
-  fetch('https://api.oxapay.com/v1/payment/invoice', {
+  fetch(BACKEND_URL + '/order/create', {
     method:  'POST',
     headers: {'Content-Type': 'application/json'},
-    body:    JSON.stringify({
-      merchant_api_key: OXAPAY_KEY,
-      amount:           priceUsd,
-      currency:         'USD',
-      lifetime:         60,
-      callback_url:     BACKEND_URL + '/webhook/oxapay',
-      description:      'Emoticon emoji pack',
-    }),
+    body:    JSON.stringify({ price_usd: priceUsd }),
   })
-    .then(function(r) { return r.json(); })
+    .then(function(r) {
+      if (!r.ok) throw new Error('server error');
+      return r.json();
+    })
     .then(function(data) {
-      var payUrl  = data.payment_url || data.payLink || '';
-      var trackId = String(data.track_id || data.trackId || '');
-      if (!payUrl || !trackId) throw new Error('OxaPay: ' + JSON.stringify(data));
-
-      currentOrderId = trackId;
-      oxaPayUrl = payUrl;
-
-      /* Register track_id with backend so webhook can update it */
-      fetch(BACKEND_URL + '/order/register', {
-        method:  'POST',
-        headers: {'Content-Type': 'application/json'},
-        body:    JSON.stringify({ track_id: trackId }),
-      }).catch(function() {});
-
+      currentOrderId = data.txn_id;
+      paymentUrl = data.invoice_url;
       document.getElementById('pay-status-txt').textContent = 'AWAITING PAYMENT';
       try {
         if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-          Telegram.WebApp.openLink(payUrl);
+          Telegram.WebApp.openLink(data.invoice_url);
         } else {
-          window.open(payUrl, '_blank');
+          window.open(data.invoice_url, '_blank');
         }
       } catch(e) {}
       startPolling();
     })
     .catch(function(err) {
-      console.error('OxaPay error:', err);
+      console.error('Payment error:', err);
       document.getElementById('pay-status-txt').textContent = 'ERROR — GO BACK & RETRY';
       document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#EF4444');
     });
 }
 
-function reopenOxaPay() {
-  if (!oxaPayUrl) return;
+function reopenPayment() {
+  if (!paymentUrl) return;
   if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-    Telegram.WebApp.openLink(oxaPayUrl);
+    Telegram.WebApp.openLink(paymentUrl);
   } else {
-    window.open(oxaPayUrl, '_blank');
+    window.open(paymentUrl, '_blank');
   }
 }
 
