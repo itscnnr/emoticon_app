@@ -1123,15 +1123,20 @@ function goToPayment() {
       currentOrderId = data.track_id;
       oxaPayUrl = data.payment_url;
       document.getElementById('pay-status-txt').textContent = 'AWAITING PAYMENT';
-      if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-        Telegram.WebApp.openLink(data.payment_url);
-      } else {
-        window.open(data.payment_url, '_blank');
+      try {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
+          Telegram.WebApp.openLink(data.payment_url);
+        } else {
+          window.open(data.payment_url, '_blank');
+        }
+      } catch(e) {
+        console.log('Auto-open blocked, user can tap OPEN OXAPAY');
       }
       startPolling();
     })
-    .catch(function() {
-      document.getElementById('pay-status-txt').textContent = 'ERROR — TRY AGAIN';
+    .catch(function(err) {
+      console.error('Order create error:', err);
+      document.getElementById('pay-status-txt').textContent = 'ERROR — GO BACK & RETRY';
       document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#EF4444');
     });
 }
