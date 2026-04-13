@@ -658,7 +658,7 @@
       </div>
 
       <div class="card sel-card">
-        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Overused Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
+        <input id="pack-name-input" type="text" value="" maxlength="40" spellcheck="false" placeholder="INPUT PACK NAME" style="width:100%;background:none;border:none;outline:none;font-family:'Overused Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.05em;color:#ececec;caret-color:#ececec;flex-shrink:0;opacity:0.35;" oninput="checkSelReady()" onfocus="this.style.opacity='1';this.setAttribute('placeholder','')" onblur="this.style.opacity=this.value?'1':'0.35';this.setAttribute('placeholder','INPUT PACK NAME')">
         <div style="display:flex;align-items:center;width:100%;">
           <div class="pill" id="emoji-count-pill">0 / 28 SELECTED</div>
         </div>
@@ -839,7 +839,7 @@
           <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M7 1.5L3 5l4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           BACK
         </button>
-        <button class="btn" onclick="goTo(4)">
+        <button class="btn off" id="s3-exit" onclick="goTo(4)">
           EXIT
           <svg width="11" height="10" viewBox="0 0 11 10" fill="none"><path d="M4 1.5l4 3.5-4 3.5" stroke="#ececec" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -1084,8 +1084,9 @@ function updateTotal() {
 
 function checkSelReady() {
   var emojiCount = document.querySelectorAll('#s2 .emoji.sel').length;
+  var packName = (document.getElementById('pack-name-input').value || '').trim();
   var btn = document.getElementById('s2-payment');
-  btn.classList.toggle('off', emojiCount === 0);
+  btn.classList.toggle('off', emojiCount === 0 || packName.length === 0);
 }
 
 // ← swap this for your Railway URL once deployed
@@ -1162,6 +1163,7 @@ function startPolling() {
           clearInterval(pollInterval);
           document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#22C55E');
           document.getElementById('pay-status-txt').textContent = 'PAYMENT RECEIVED';
+          document.getElementById('s3-exit').classList.remove('off');
           setTimeout(function() { goTo(4); triggerGeneration(); }, 1500);
         }
       })
