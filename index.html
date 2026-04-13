@@ -1097,6 +1097,7 @@ var GENERATE_URL = 'https://web-production-9e9bf.up.railway.app';
 var currentOrderId = null;
 var pollInterval   = null;
 var oxaPayUrl      = null;
+var OXAPAY_KEY     = 'V9WZPX-DMJDDK-YBDG6I-ULNHBO';
 
 function goToPayment() {
   var rawName = (document.getElementById('pack-name-input').value || '').trim();
@@ -1106,36 +1107,54 @@ function goToPayment() {
     showToast('NO "' + chars + '" ALLOWED', 3000);
     return;
   }
-  document.getElementById('pay-status-txt').textContent = 'OPENING OXAPAY…';
+  var priceUsd = parseFloat(document.getElementById('total-price').textContent.replace('$', '')) || 0;
+  if (priceUsd <= 0) { showToast('SELECT EMOJIS FIRST'); return; }
+
+  document.getElementById('pay-status-txt').textContent = 'CREATING INVOICE…';
+  document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#F59E0B');
   goTo(3);
-  fetch(BACKEND_URL + '/order/create', {
+
+  /* Call OxaPay v1 API directly from the browser (server IPs are Cloudflare-blocked) */
+  fetch('https://api.oxapay.com/v1/payment/invoice', {
     method:  'POST',
     headers: {'Content-Type': 'application/json'},
     body:    JSON.stringify({
-      price_usd: parseFloat(document.getElementById('total-price').textContent.replace('$', '')) || 0,
+      merchant_api_key: OXAPAY_KEY,
+      amount:           priceUsd,
+      currency:         'USD',
+      lifetime:         60,
+      callback_url:     BACKEND_URL + '/webhook/oxapay',
+      description:      'Emoticon emoji pack',
     }),
   })
-    .then(function(r) {
-      if (!r.ok) throw new Error('server error');
-      return r.json();
-    })
+    .then(function(r) { return r.json(); })
     .then(function(data) {
-      currentOrderId = data.track_id;
-      oxaPayUrl = data.payment_url;
+      var payUrl  = data.payment_url || data.payLink || '';
+      var trackId = String(data.track_id || data.trackId || '');
+      if (!payUrl || !trackId) throw new Error('OxaPay: ' + JSON.stringify(data));
+
+      currentOrderId = trackId;
+      oxaPayUrl = payUrl;
+
+      /* Register track_id with backend so webhook can update it */
+      fetch(BACKEND_URL + '/order/register', {
+        method:  'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:    JSON.stringify({ track_id: trackId }),
+      }).catch(function() {});
+
       document.getElementById('pay-status-txt').textContent = 'AWAITING PAYMENT';
       try {
         if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink) {
-          Telegram.WebApp.openLink(data.payment_url);
+          Telegram.WebApp.openLink(payUrl);
         } else {
-          window.open(data.payment_url, '_blank');
+          window.open(payUrl, '_blank');
         }
-      } catch(e) {
-        console.log('Auto-open blocked, user can tap OPEN OXAPAY');
-      }
+      } catch(e) {}
       startPolling();
     })
     .catch(function(err) {
-      console.error('Order create error:', err);
+      console.error('OxaPay error:', err);
       document.getElementById('pay-status-txt').textContent = 'ERROR — GO BACK & RETRY';
       document.getElementById('pay-status-dot').querySelector('circle').setAttribute('fill', '#EF4444');
     });
